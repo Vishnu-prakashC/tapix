@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int waterCount = 0;
+  bool isPressed = false;
 
   void addWater() {
     setState(() {
@@ -48,11 +51,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 30),
           GestureDetector(
-            onTap: addWater,
+            onTapDown: (_) {
+              setState(() => isPressed = true);
+            },
+            onTapUp: (_) {
+              setState(() => isPressed = false);
+              addWater();
+            },
+            onTapCancel: () {
+              setState(() => isPressed = false);
+            },
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              height: 180,
-              width: 180,
+              duration: const Duration(milliseconds: 120),
+              height: isPressed ? 160 : 180,
+              width: isPressed ? 160 : 180,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.cyanAccent,
